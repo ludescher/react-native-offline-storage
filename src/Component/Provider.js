@@ -26,7 +26,7 @@ class Provider extends React.Component {
                 initialized: true,
             });
         } else {
-            throwError("mapping should be of type object !");
+            throwError("mapping should be of type object!");
         }
     }
 }
