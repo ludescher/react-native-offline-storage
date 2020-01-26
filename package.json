@@ -1,0 +1,43 @@
+{
+    "name": "react-native-offline-storage",
+    "version": "1.0.0",
+    "description": "A wrapper for react-native-async-storage.",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ludescher/react-native-offline-storage.git"
+    },
+    "keywords": [
+        "react",
+        "storage",
+        "offline"
+    ],
+    "tags": [
+        "react",
+        "react-native",
+        "storage",
+        "offline"
+    ],
+    "author": "Johannes Ludescher",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/ludescher/react-native-offline-storage/issues"
+    },
+    "homepage": "https://github.com/ludescher/react-native-offline-storage#readme",
+    "peerDependencies": {
+        "react": "^16.9.0",
+        "react-native": "^0.61.5"
+    },
+    "devDependencies": {
+        "react": "^16.9.0",
+        "react-native": "^0.61.5"
+    },
+    "dependencies": {
+        "@react-native-community/async-storage": "^1.7.1",
+        "hoist-non-react-statics": "^3.3.2",
+        "prop-types": "^15.7.2"
+    }
+}
