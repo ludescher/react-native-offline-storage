@@ -130,8 +130,10 @@ export default class StorageManager {
      * @param {StorageListener} listener 
      */
     static addStorageListener(listener) {
-        listener.id = generateUniqueId(StorageManager._listeners);
-        StorageManager._listeners.push(listener);
+        if (listener) {
+            listener.id = generateUniqueId(StorageManager._listeners);
+            StorageManager._listeners.push(listener);
+        }
     }
 
     /**
@@ -139,10 +141,12 @@ export default class StorageManager {
      * @param {StorageListener} listener 
      */
     static removeStorageListener(listener) {
-        if (StorageManager._listeners.length > 0) {
-            let _index = inArray(StorageManager._listeners, 'id', listener.id, true);
-            if (_index >= 0) {
-                StorageManager._listeners.splice(_index, 1);
+        if (listener) {
+            if (StorageManager._listeners.length > 0) {
+                let _index = inArray(StorageManager._listeners, 'id', listener.id, true);
+                if (_index >= 0) {
+                    StorageManager._listeners.splice(_index, 1);
+                }
             }
         }
     }

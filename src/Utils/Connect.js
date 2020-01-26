@@ -2,6 +2,7 @@ import React from 'react';
 import StorageManager from '../Manager/StorageManager';
 import StorageListener from '../Entity/StorageListener';
 import throwError from '../Service/ErrorService';
+import hoistStatics from 'hoist-non-react-statics';
 
 export function connect(propsToBind = []) {
     if (!(propsToBind instanceof Array)) {
@@ -18,9 +19,9 @@ export function connect(propsToBind = []) {
             state = {};
 
             /**
-             * @type {Array<StorageListener>}
+             * @type {StorageListener}
              */
-            _events = [];
+            _event = null;
 
             constructor(props) {
                 super(props);
@@ -36,13 +37,11 @@ export function connect(propsToBind = []) {
                         // set prop as state
                         this.state[_propname] = StorageManager.getDataByProp(_propname);
                         if (_sync) {
-                            this._events.push(
-                                new StorageListener(
-                                    _propname,
-                                    _componentname,
-                                    WrappedComponent,
-                                    this.updateData
-                                )
+                            this._event = new StorageListener(
+                                _propname,
+                                _componentname,
+                                WrappedComponent,
+                                this.updateData
                             );
                         }
                     }
@@ -68,40 +67,26 @@ export function connect(propsToBind = []) {
             }
 
             componentDidMount() {
-                // register listener
-                for (let i = 0; i < this._events.length; i++) {
-                    StorageManager.addStorageListener(this._events[i]);
-                }
+                StorageManager.addStorageListener(this._event);
             }
 
             componentWillUnmount() {
-                // remove listener
-                for (let i = 0; i < this._events.length; i++) {
-                    StorageManager.removeStorageListener(this._events[i]);
-                }
+                StorageManager.removeStorageListener(this._event);
             }
 
             updateData = (listener, value) => {
-                
-                console.log(`updateData(${WrappedComponent.name})`, {
-                    listener,
-                    value,
-                    prevvalue: this.state[listener.propname],
-                });
-                
                 this.forceUpdate();
-                
-                // 1. check if value has changed
-                // 2. update props
-                // 3. Rerender UI (prevent child from rerendering)
             }
         }
-
-        SubscriptionComponent.displayName = `SubscriptionComponent(${getDisplayName(WrappedComponent)})`;
-
-        return React.forwardRef((props, ref) => {
+        
+        const _forwarded = React.forwardRef((props, ref) => {
             return <SubscriptionComponent {...props} forwardedRef={ref} />
-        })
+        });
+
+        _forwarded.displayName = `SubscriptionComponent(${getDisplayName(WrappedComponent)})`;
+        _forwarded.WrappedComponent = WrappedComponent;
+
+        return hoistStatics(_forwarded, WrappedComponent);
     }
 
     function getDisplayName(WrappedComponent) {
