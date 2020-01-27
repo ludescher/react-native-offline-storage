@@ -1,4 +1,3 @@
-import './src/Utils/StringFormat';
 import Entity from './src/Entity/Entity';
 import UnloadedValue from './src/Entity/UnloadedValue';
 import * as Normalizer from './src/Utils/Normalizer';
@@ -12,7 +11,7 @@ function registerEntity(entity, classname) {
 }
 
 async function resetStorage() {
-    return await StorageManager.purgeStorage();
+    return await StorageManager.resetStorage();
 }
 
 function storage() {

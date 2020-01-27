@@ -82,7 +82,7 @@ export default class StorageManager {
     /**
      * clear all existing data from storage and re-initialize
      */
-    static async purgeStorage() {
+    static async resetStorage() {
         if (StorageManager._storage) {
             // clear all data from storage
             for (let propname in StorageManager._storage) {

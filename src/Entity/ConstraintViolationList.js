@@ -21,6 +21,6 @@ export default class ConstraintViolationList {
     }
 
     toString() {
-        return '[{0}]: {1}'.format(this.title, this.description);
+        return `[${this.title}]: ${this.description}`;
     }
 }
