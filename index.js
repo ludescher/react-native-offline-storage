@@ -6,6 +6,11 @@ import Provider from './src/Component/Provider';
 import { connect } from './src/Utils/Connect';
 import throwError from './src/Service/ErrorService';
 
+/**
+ * 
+ * @param {Entity} entity 
+ * @param {String} classname 
+ */
 function registerEntity(entity, classname) {
     Normalizer.EntityNormalizer.addEntity(entity, classname);
 }
@@ -18,6 +23,11 @@ function storage() {
     return StorageManager._storage;
 }
 
+/**
+ * 
+ * @param {String} propname 
+ * @param {*} value 
+ */
 async function store(propname, value) {
     if (typeof propname === 'string' && propname.length > 0) {
         if (value) {

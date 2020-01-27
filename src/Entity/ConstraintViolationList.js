@@ -14,6 +14,12 @@ export default class ConstraintViolationList {
      */
     violations;
 
+    /**
+     * 
+     * @param {String} title 
+     * @param {String} description 
+     * @param {Array<Object>} violations 
+     */
     constructor(title, description, violations = []) {
         this.title = title;
         this.description = description;

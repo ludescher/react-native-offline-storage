@@ -24,6 +24,13 @@ export default class StorageListener {
      */
     callback;
 
+    /**
+     * 
+     * @param {String} propname 
+     * @param {String} componentname 
+     * @param {Element} component 
+     * @param {Function} callback 
+     */
     constructor(propname, componentname, component, callback) {
         this.propname = propname;
         this.componentname = componentname;

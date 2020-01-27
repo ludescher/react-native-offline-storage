@@ -14,6 +14,12 @@ export default class HydraError {
      */
     trace;
 
+    /**
+     * 
+     * @param {String} title 
+     * @param {String} description 
+     * @param {Array<String>} trace 
+     */
     constructor(title, description, trace = []) {
         this.title = title;
         this.description = description;
