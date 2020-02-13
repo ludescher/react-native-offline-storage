@@ -20,8 +20,13 @@ async function resetStorage() {
     return await StorageManager.resetStorage();
 }
 
-function storage() {
-    return StorageManager._storage;
+/**
+ * 
+ * @param {String} value
+ * @returns {*}
+ */
+function getData(value = null) {
+    return (value !== null) ? StorageManager.getDataByProp(value) : StorageManager._storage;
 }
 
 /**
@@ -29,7 +34,7 @@ function storage() {
  * @param {String} propname 
  * @param {*} value 
  */
-async function store(propname, value) {
+async function addData(propname, value) {
     if (typeof propname === 'string' && propname.length > 0) {
         if (value) {
             return await StorageManager.store(propname, value);
@@ -41,4 +46,4 @@ async function store(propname, value) {
     }
 }
 
-export { registerEntity, Entity, UnloadedValue, resetStorage, storage, Provider, store, connect, LinkedDataTransformer };
+export { registerEntity, Entity, UnloadedValue, resetStorage, Provider, addData, connect, LinkedDataTransformer, getData };
