@@ -5,6 +5,7 @@ import StorageManager from './src/Manager/StorageManager';
 import Provider from './src/Component/Provider';
 import { connect } from './src/Utils/Connect';
 import throwError from './src/Service/ErrorService';
+import { LinkedDataTransformer } from './src/Utils/Normalizer';
 
 /**
  * 
@@ -40,4 +41,4 @@ async function store(propname, value) {
     }
 }
 
-export { registerEntity, Entity, UnloadedValue, resetStorage, storage, Provider, store, connect };
+export { registerEntity, Entity, UnloadedValue, resetStorage, storage, Provider, store, connect, LinkedDataTransformer };
