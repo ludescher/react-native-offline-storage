@@ -13,3 +13,5 @@
    * set default value by type
       * array => empty array and entity => null
       * array => empty array and entity => new empty entity instance
+* Add Prefix to Storage-Key
+   * You should set the User-Id as the prefix, all User-specific data is now related to the user id and can only be accessed by the user with the right id (this resolved a few issues with, different user accessing all userdata => not optimal).
