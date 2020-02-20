@@ -18,9 +18,9 @@ class Provider extends React.Component {
         return (this.state.initialized) ? this.props.children : this.props.loadingIndicator;
     }
 
-    initialize = async (props) => {
+    initialize = async (props) => {        
         if (typeof props.mapping === 'object') {
-            await StorageManager.initialize(props.mapping);
+            await StorageManager.initialize(props.mapping, props.nullValues);
             props.initializationDone(StorageManager._storage);
             this.setState({
                 initialized: true,
@@ -36,11 +36,13 @@ Provider.propTypes = {
     loadingIndicator: PropTypes.element,
     children: PropTypes.any,
     initializationDone: PropTypes.func,
+    nullValues: PropTypes.bool,
 }
 
 Provider.defaultProps = {
     loadingIndicator: <DefaultLoadingIndicator />,
-    initializationDone: () => {}
+    initializationDone: () => {},
+    nullValues: false,
 }
 
 export default Provider;

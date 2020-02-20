@@ -25,17 +25,23 @@ export default class StorageManager {
      * 
      * @param {Object} mapping 
      */
-    static async initialize(mapping) {
+    static async initialize(mapping, nullValues) {
         StorageManager._mapping = mapping;
         StorageManager._storage = {};
-
         for (let propname in StorageManager._mapping) {
             let _type = this._internalCheckPropType(StorageManager._mapping[propname]);
             let _value = await this._internalRehydrate(propname);
             if (_value) {
                 StorageManager._storage[propname] = _value;
             } else {
-                StorageManager._storage[propname] = (_type === DataTypes.array) ? [] : null;
+                let _default = null;
+                if (_type === DataTypes.array) {
+                    _default = [];
+                } else if (!nullValues) {
+                    const _entity = EntityNormalizer.getType(_type);
+                    _default = new _entity();
+                }
+                StorageManager._storage[propname] = _default;
             }
         }
     }
