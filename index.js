@@ -22,28 +22,29 @@ async function resetStorage() {
 
 /**
  * 
- * @param {String} value
+ * @param {String} key
  * @returns {*}
  */
-function getData(value = null) {
-    return (value !== null) ? StorageManager.getDataByProp(value) : StorageManager._storage;
+function load(key = null) {
+    return (key !== null) ? StorageManager.getDataByProp(key) : StorageManager._storage;
 }
 
 /**
  * 
- * @param {String} propname 
+ * @param {String} key 
  * @param {*} value 
  */
-async function addData(propname, value) {
-    if (typeof propname === 'string' && propname.length > 0) {
-        if (value) {
-            return await StorageManager.store(propname, value);
+async function save(key, value = null) {
+    const _value = (value) ? value : StorageManager.getDataByProp(key);
+    if (typeof key === 'string' && key.length > 0) {
+        if (_value) {
+            return await StorageManager.store(key, _value);
         } else {
             throwError('value cannot be null.');
         }
     } else {
-        throwError('propname should be of type String!');
+        throwError('key should be of type String!');
     }
 }
 
-export { registerEntity, Entity, UnloadedValue, resetStorage, Provider, addData, connect, LinkedDataTransformer, getData };
+export { registerEntity, Entity, UnloadedValue, resetStorage, Provider, connect, LinkedDataTransformer, save, load };
