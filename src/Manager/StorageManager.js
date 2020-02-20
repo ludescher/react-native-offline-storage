@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import { inArray, generateUniqueId } from '../Utils/ArrayHelper';
 import DataTypes from '../Utils/DataTypes';
-import { LinkedDataTransformer } from '../Utils/Normalizer';
+import { LinkedDataTransformer, EntityNormalizer } from '../Utils/Normalizer';
 import UnloadedValue from '../Entity/UnloadedValue';
 import throwError from '../Service/ErrorService';
 
