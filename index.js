@@ -26,7 +26,7 @@ async function resetStorage() {
  * @returns {*}
  */
 function load(key = null) {
-    return (key !== null) ? StorageManager.getDataByProp(key) : StorageManager._storage;
+    return StorageManager.load(key);
 }
 
 /**
@@ -35,16 +35,15 @@ function load(key = null) {
  * @param {*} value 
  */
 async function save(key, value = null) {
-    const _value = (value) ? value : StorageManager.getDataByProp(key);
-    if (typeof key === 'string' && key.length > 0) {
-        if (_value) {
-            return await StorageManager.store(key, _value);
-        } else {
-            throwError('value cannot be null.');
-        }
-    } else {
-        throwError('key should be of type String!');
-    }
+    StorageManager.save(key, value);
+}
+
+/**
+ * 
+ * @param {String} key 
+ */
+async function clear(key = null) {
+    StorageManager.clear(key);
 }
 
 export { registerEntity, Entity, UnloadedValue, resetStorage, Provider, connect, LinkedDataTransformer, save, load };

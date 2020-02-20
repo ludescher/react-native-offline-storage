@@ -85,6 +85,28 @@ export default class StorageManager {
         this.emit(propname);
     }
 
+    static async clear(key) {
+        
+    }
+
+    static load(key) {
+        return (key !== null) ? this.getDataByProp(key) : this._storage;
+    }
+
+    static async save(key, value = null) {
+        if (typeof key !== 'string') {
+            throwError('key should be of type String!');
+        }
+    }
+
+    static async _internalSave(key, value) {
+
+    }
+
+    static async _internalShallowSave(key, value) {
+
+    }
+
     /**
      * clear all existing data from storage and re-initialize
      */
