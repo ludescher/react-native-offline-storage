@@ -4,7 +4,6 @@ import * as Normalizer from './src/Utils/Normalizer';
 import StorageManager from './src/Manager/StorageManager';
 import Provider from './src/Component/Provider';
 import { connect } from './src/Utils/Connect';
-import throwError from './src/Service/ErrorService';
 import { LinkedDataTransformer } from './src/Utils/Normalizer';
 
 /**
@@ -16,8 +15,8 @@ function registerEntity(entity, classname) {
     Normalizer.EntityNormalizer.addEntity(entity, classname);
 }
 
-async function resetStorage() {
-    return await StorageManager.resetStorage();
+async function clearAll() {
+    return await StorageManager.clearAll();
 }
 
 /**
@@ -26,7 +25,7 @@ async function resetStorage() {
  * @returns {*}
  */
 function load(key = null) {
-    return (key !== null) ? StorageManager.getDataByProp(key) : StorageManager._storage;
+    return StorageManager.load(key);
 }
 
 /**
@@ -35,16 +34,15 @@ function load(key = null) {
  * @param {*} value 
  */
 async function save(key, value = null) {
-    const _value = (value) ? value : StorageManager.getDataByProp(key);
-    if (typeof key === 'string' && key.length > 0) {
-        if (_value) {
-            return await StorageManager.store(key, _value);
-        } else {
-            throwError('value cannot be null.');
-        }
-    } else {
-        throwError('key should be of type String!');
-    }
+    StorageManager.save(key, value);
 }
 
-export { registerEntity, Entity, UnloadedValue, resetStorage, Provider, connect, LinkedDataTransformer, save, load };
+/**
+ * 
+ * @param {String} key 
+ */
+async function clear(key = null) {
+    await StorageManager.clear(key);
+}
+
+export { registerEntity, Entity, UnloadedValue, clear, clearAll, Provider, connect, LinkedDataTransformer, save, load };
