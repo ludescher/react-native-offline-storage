@@ -4,7 +4,6 @@ import * as Normalizer from './src/Utils/Normalizer';
 import StorageManager from './src/Manager/StorageManager';
 import Provider from './src/Component/Provider';
 import { connect } from './src/Utils/Connect';
-import throwError from './src/Service/ErrorService';
 import { LinkedDataTransformer } from './src/Utils/Normalizer';
 
 /**
@@ -16,8 +15,8 @@ function registerEntity(entity, classname) {
     Normalizer.EntityNormalizer.addEntity(entity, classname);
 }
 
-async function resetStorage() {
-    return await StorageManager.resetStorage();
+async function clearAll() {
+    return await StorageManager.clearAll();
 }
 
 /**
@@ -43,7 +42,7 @@ async function save(key, value = null) {
  * @param {String} key 
  */
 async function clear(key = null) {
-    StorageManager.clear(key);
+    await StorageManager.clear(key);
 }
 
-export { registerEntity, Entity, UnloadedValue, resetStorage, Provider, connect, LinkedDataTransformer, save, load };
+export { registerEntity, Entity, UnloadedValue, clear, clearAll, Provider, connect, LinkedDataTransformer, save, load };

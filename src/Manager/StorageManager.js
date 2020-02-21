@@ -28,11 +28,11 @@ export default class StorageManager {
     static async initialize(mapping, nullValues) {
         StorageManager._mapping = mapping;
         StorageManager._storage = {};
-        for (let propname in StorageManager._mapping) {
-            let _type = this._internalCheckPropType(StorageManager._mapping[propname]);
-            let _value = await this._internalRehydrate(propname);
+        for (let key in StorageManager._mapping) {
+            let _type = StorageManager._internalCheckPropType(StorageManager._mapping[key]);
+            let _value = await StorageManager._internalRehydrate(key);
             if (_value) {
-                StorageManager._storage[propname] = _value;
+                StorageManager._storage[key] = _value;
             } else {
                 let _default = null;
                 if (_type === DataTypes.array) {
@@ -41,80 +41,92 @@ export default class StorageManager {
                     const _entity = EntityNormalizer.getType(_type);
                     _default = new _entity();
                 }
-                StorageManager._storage[propname] = _default;
+                StorageManager._storage[key] = _default;
             }
         }
     }
 
     /**
      * 
-     * @param {String} propname 
+     * @param {String} key 
+     * @returns {*}
+     */
+    static load(key) {
+        return (key !== null) ? StorageManager.getDataByProp(key) : StorageManager._storage;
+    }
+
+    /**
+     * 
+     * @param {String} key 
      * @param {*} value 
      */
-    static async store(propname, value) {
-        if (!StorageManager._storage) {
-            throwError('Storage has not been initialized, you need a Provider-Component.');
-        }
-        if (!StorageManager._storage.hasOwnProperty(propname)) {
-            throwError(`The given propname "${propname}" does not exists!`);
-        }
-        let _type = this._internalCheckPropType(StorageManager._mapping[propname]);
-        if (_type === DataTypes.array) {
-            if (value && (value instanceof Array)) {
-                for (let i = 0; i < value.length; i++) {
-                    let _value = value[i];
-                    let _index = inArray(StorageManager._storage[propname], 'id', _value.id, true);
-                    if (_index >= 0) {
-                        StorageManager._storage[propname][_index] = _value;
-                    } else {
-                        StorageManager._storage[propname].push(_value);
-                    }
-                }
-            } else {
-                let _index = inArray(StorageManager._storage[propname], 'id', value.id, true);
-                if (_index >= 0) {
-                    StorageManager._storage[propname][_index] = value;
-                } else {
-                    StorageManager._storage[propname].push(value);
-                }
-            }
-        } else {
-            StorageManager._storage[propname] = value;
-        }
-        await this._internalPersist(propname, StorageManager._storage[propname]);
-        this.emit(propname);
-    }
-
-    static async clear(key) {
-        
-    }
-
-    static load(key) {
-        return (key !== null) ? this.getDataByProp(key) : this._storage;
-    }
-
     static async save(key, value = null) {
         if (typeof key !== 'string') {
             throwError('key should be of type String!');
         }
+        if (!StorageManager._storage) {
+            throwError('Storage has not been initialized, you need a Provider-Component.');
+        }
+        if (!StorageManager._storage.hasOwnProperty(key)) {
+            throwError(`The given key "${key}" does not exists!`);
+        }
+        if (value) {
+            StorageManager._internalSave(key, value);
+        } else {
+            StorageManager._internalShallowSave(key);
+        }
     }
 
+    /**
+     * 
+     * @param {String} key 
+     * @param {*} value 
+     */
     static async _internalSave(key, value) {
-
+        let _type = StorageManager._internalCheckPropType(StorageManager._mapping[key]);
+        if (_type === DataTypes.array) {
+            if (value && (value instanceof Array)) {
+                for (let i = 0; i < value.length; i++) {
+                    let _value = value[i];
+                    let _index = inArray(StorageManager._storage[key], 'id', _value.id, true);
+                    if (_index >= 0) {
+                        StorageManager._storage[key][_index] = _value;
+                    } else {
+                        StorageManager._storage[key].push(_value);
+                    }
+                }
+            } else {
+                let _index = inArray(StorageManager._storage[key], 'id', value.id, true);
+                if (_index >= 0) {
+                    StorageManager._storage[key][_index] = value;
+                } else {
+                    StorageManager._storage[key].push(value);
+                }
+            }
+        } else {
+            StorageManager._storage[key] = value;
+        }
+        await StorageManager._internalPersist(key, StorageManager._storage[key]);
+        StorageManager.emit(key);
     }
 
-    static async _internalShallowSave(key, value) {
-
+    /**
+     * 
+     * @param {String} key 
+     */
+    static async _internalShallowSave(key) {
+        await StorageManager._internalPersist(key, StorageManager._storage[key]);
+        StorageManager.emit(key);
     }
 
     /**
      * clear all existing data from storage and re-initialize
      */
-    static async resetStorage() {
+    static async clearAll() {
         if (StorageManager._storage) {
             // clear all data from storage
-            for (let propname in StorageManager._storage) {
-                await this._internalClearStorageData(propname)
+            for (let key in StorageManager._storage) {
+                await StorageManager._internalClearStorageData(key)
                 .then((response) => {
                     if (!response) {
                         throw response;
@@ -125,32 +137,53 @@ export default class StorageManager {
                 })
             }
         }
-        await this.initialize(StorageManager._mapping);
+        await StorageManager.initialize(StorageManager._mapping);
         return true;
     }
 
     /**
      * 
-     * @param {String} propname 
-     * @returns {*}
+     * @param {String} key 
      */
-    static getDataByProp(propname = null) {
-        if (!StorageManager._storage) {
-            return new UnloadedValue(propname, null);
+    static async clear(key) {
+        if (!key) {
+            throwError('clear(key) key: cannot not be null!');
         }
-        if (!propname || !StorageManager._storage.hasOwnProperty(propname)) {
-            throwError(`The given propname "${propname}" does not exist.`);
-            return new UnloadedValue(null, null);
+        if (StorageManager._storage) {
+            await StorageManager._internalClearStorageData(key)
+            .then((response) => {
+                if (!response) {
+                    throw response;
+                }
+            })
+            .catch((error) => {
+                throw error;
+            })
         }
-        return (StorageManager._storage) ? StorageManager._storage[propname] : new UnloadedValue(propname, StorageManager._storage);
     }
 
     /**
      * 
-     * @param {String} propname 
+     * @param {String} key 
+     * @returns {*}
      */
-    static propnameExists(propname) {
-        return StorageManager._storage.hasOwnProperty(propname);
+    static getDataByProp(key = null) {
+        if (!StorageManager._storage) {
+            return new UnloadedValue(key, null);
+        }
+        if (!key || !StorageManager._storage.hasOwnProperty(key)) {
+            throwError(`The given key "${key}" does not exist.`);
+            return new UnloadedValue(null, null);
+        }
+        return (StorageManager._storage) ? StorageManager._storage[key] : new UnloadedValue(key, StorageManager._storage);
+    }
+
+    /**
+     * 
+     * @param {String} key 
+     */
+    static keyExists(key) {
+        return StorageManager._storage.hasOwnProperty(key);
     }
 
     /**
@@ -181,13 +214,13 @@ export default class StorageManager {
 
     /**
      * 
-     * @param {String} propname 
+     * @param {String} key 
      */
-    static emit(propname) {
+    static emit(key) {
         for (let i = 0; i < StorageManager._listeners.length; i++) {
             let _listener = StorageManager._listeners[i];
-            if (_listener.propname === propname) {
-                let _value = (StorageManager._storage) ? StorageManager._storage[_listener.propname] : new UnloadedValue(_listener.propname, StorageManager._storage);
+            if (_listener.key === key) {
+                let _value = (StorageManager._storage) ? StorageManager._storage[_listener.key] : new UnloadedValue(_listener.key, StorageManager._storage);
                 _listener.callback(_listener, _value);
             }
         }
@@ -196,10 +229,10 @@ export default class StorageManager {
     /**
      * load prop from storage
      * 
-     * @param {String} propname
+     * @param {String} key
      */
-    static async _internalRehydrate(propname) {
-        return await AsyncStorage.getItem('@' + propname)
+    static async _internalRehydrate(key) {
+        return await AsyncStorage.getItem('@' + key)
         .then((value) => {
             return LinkedDataTransformer.denormalize(JSON.parse(value));
         })
@@ -209,13 +242,13 @@ export default class StorageManager {
     }
 
     /**
-     * persist a propname-value pair
+     * persist a key-value pair
      * 
-     * @param {String} propname
+     * @param {String} key
      * @param {*} value
      */
-    static async _internalPersist(propname, value) {
-        return await AsyncStorage.setItem('@' + propname, JSON.stringify(LinkedDataTransformer.normalize(value, {maxEntityDepth: 3})))
+    static async _internalPersist(key, value) {
+        return await AsyncStorage.setItem('@' + key, JSON.stringify(LinkedDataTransformer.normalize(value, {maxEntityDepth: 3})))
         .then(() => {
             return true;
         })
@@ -225,13 +258,13 @@ export default class StorageManager {
     }
 
     /**
-     * remove storage-data by propname
+     * remove storage-data by key
      * 
-     * @param {String} propname
+     * @param {String} key
      * @returns {Boolean}
      */
-    static async _internalClearStorageData(propname) {
-        return await AsyncStorage.removeItem('@' + propname)
+    static async _internalClearStorageData(key) {
+        return await AsyncStorage.removeItem('@' + key)
         .then(() => {
             return true;
         })

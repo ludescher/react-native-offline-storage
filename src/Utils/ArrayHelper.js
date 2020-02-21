@@ -1,18 +1,18 @@
 /**
  * 
  * @param {Array<*>} arr 
- * @param {String} propname 
+ * @param {String} key 
  * @param {*} value 
  * @param {Boolean} index 
  * @returns {(Boolean|Number)}
  */
-export function inArray(arr, propname, value, index = false) {
+export function inArray(arr, key, value, index = false) {
     if (!arr) {
         return (index) ? -1 : false;
     }
     for (let i = 0; i < arr.length; i++) {
-        if (arr[i].hasOwnProperty(propname)) {
-            if (arr[i][propname] == value) {
+        if (arr[i].hasOwnProperty(key)) {
+            if (arr[i][key] == value) {
                 return (index) ? i : true;
             }
         }

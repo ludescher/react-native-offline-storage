@@ -7,7 +7,7 @@ export default class StorageListener {
     /**
      * @type {String}
      */
-    propname;
+    key;
 
     /**
      * @type {String}
@@ -26,13 +26,13 @@ export default class StorageListener {
 
     /**
      * 
-     * @param {String} propname 
+     * @param {String} key 
      * @param {String} componentname 
      * @param {Element} component 
      * @param {Function} callback 
      */
-    constructor(propname, componentname, component, callback) {
-        this.propname = propname;
+    constructor(key, componentname, component, callback) {
+        this.key = key;
         this.componentname = componentname;
         this.component = component;
         this.callback = callback;

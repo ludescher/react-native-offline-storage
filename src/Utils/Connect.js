@@ -28,17 +28,17 @@ export function connect(propsToBind = []) {
                 if (propsToBind.length > 0) {
                     for (let i = 0; i < propsToBind.length; i++) {
                         const _value = propsToBind[i];
-                        const _propname = (typeof _value === 'object' && _value.name) ? _value.name : _value;
+                        const _key = (typeof _value === 'object' && _value.name) ? _value.name : _value;
                         const _sync = (typeof _value === 'object' && _value.sync) ? _value.sync : false;
-                        if (!StorageManager.propnameExists(_propname)) {
-                            throwError(`The given propname "${_propname}" does not exist.`);
+                        if (!StorageManager.keyExists(_key)) {
+                            throwError(`The given key "${_key}" does not exist.`);
                         }
                         const _componentname = WrappedComponent.name;
                         // set prop as state
-                        this.state[_propname] = StorageManager.getDataByProp(_propname);
+                        this.state[_key] = StorageManager.getDataByProp(_key);
                         if (_sync) {
                             this._event = new StorageListener(
-                                _propname,
+                                _key,
                                 _componentname,
                                 WrappedComponent,
                                 this.updateData
