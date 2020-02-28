@@ -34,7 +34,7 @@ function load(key = null) {
  * @param {*} value 
  */
 async function save(key, value = null) {
-    return await StorageManager.save(key, value);
+    StorageManager.save(key, value);
 }
 
 /**
