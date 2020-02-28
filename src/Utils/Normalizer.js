@@ -51,6 +51,10 @@ class EntityNormalizer extends DataNormalizer {
         });
     }
 
+    static getByEntityId(id) {
+        return this.loadedEntitys[id] ?? null;
+    }
+
     static isTypenameRegistered(name) {
         let registered = this.registeredEntities.find(t => name === t.typename)
         return registered ? true : false;
