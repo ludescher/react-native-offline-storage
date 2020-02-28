@@ -71,9 +71,9 @@ export default class StorageManager {
             throwError(`The given key "${key}" does not exists!`);
         }
         if (value) {
-            StorageManager._internalSave(key, value);
+            return await StorageManager._internalSave(key, value);
         } else {
-            StorageManager._internalShallowSave(key);
+            return await StorageManager._internalShallowSave(key);
         }
     }
 
@@ -108,6 +108,7 @@ export default class StorageManager {
         }
         await StorageManager._internalPersist(key, StorageManager._storage[key]);
         StorageManager.emit(key);
+        return true;
     }
 
     /**
@@ -117,6 +118,7 @@ export default class StorageManager {
     static async _internalShallowSave(key) {
         await StorageManager._internalPersist(key, StorageManager._storage[key]);
         StorageManager.emit(key);
+        return true;
     }
 
     /**
