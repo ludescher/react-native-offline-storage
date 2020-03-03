@@ -83,12 +83,13 @@ export default class StorageManager {
      * @param {*} value 
      */
     static async _internalSave(key, value) {
-        let _type = StorageManager._internalCheckPropType(StorageManager._mapping[key]);
+        const _uniqueprop = value.constructor.UniqueProperty;
+        const _type = StorageManager._internalCheckPropType(StorageManager._mapping[key]);
         if (_type === DataTypes.array) {
             if (value && (value instanceof Array)) {
                 for (let i = 0; i < value.length; i++) {
                     let _value = value[i];
-                    let _index = inArray(StorageManager._storage[key], 'id', _value.id, true);
+                    let _index = inArray(StorageManager._storage[key], _uniqueprop, _value[_uniqueprop], true);
                     if (_index >= 0) {
                         StorageManager._storage[key][_index] = _value;
                     } else {
@@ -96,7 +97,7 @@ export default class StorageManager {
                     }
                 }
             } else {
-                let _index = inArray(StorageManager._storage[key], 'id', value.id, true);
+                let _index = inArray(StorageManager._storage[key], _uniqueprop, value[_uniqueprop], true);
                 if (_index >= 0) {
                     StorageManager._storage[key][_index] = value;
                 } else {

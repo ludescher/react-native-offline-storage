@@ -3,6 +3,7 @@ import UnloadedValue from "./UnloadedValue";
 export default class Entity {
     static Iri = null; //Internationalized Resource Identifier (replaces class name)
     static TypeMap = {};
+    static UniqueProperty = "id";
 
     entityId = null;
 
