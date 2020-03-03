@@ -55,6 +55,33 @@ export default class StorageManager {
         return (key !== null) ? StorageManager.getDataByProp(key) : StorageManager._storage;
     }
 
+    static async remove(key, value = null) {
+        if (typeof key !== 'string') {
+            throwError('key should be of type String!');
+        }
+        if (!StorageManager._storage) {
+            throwError('Storage has not been initialized, you need a Provider-Component.');
+        }
+        if (!StorageManager._storage.hasOwnProperty(key)) {
+            throwError(`The given key "${key}" does not exists!`);
+        }
+        if (!value) {
+            throwError(`You need to set a value!`);
+        }
+        const _type = StorageManager._internalCheckPropType(StorageManager._mapping[key]);
+        if (_type === DataTypes.array) {
+            const _uniqueprop = value.constructor.UniqueProperty;
+            const _index = inArray(StorageManager._storage[key], _uniqueprop, value[_uniqueprop], true);
+            if (_index >= 0) {
+                StorageManager._storage[key].splice(_index, 1);
+                await StorageManager._internalPersist(key, StorageManager._storage[key]);
+                StorageManager.emit(key);
+            }
+        } else {
+            this.reset(key);
+        }
+    }
+
     /**
      * 
      * @param {String} key 
@@ -121,11 +148,10 @@ export default class StorageManager {
     }
 
     /**
-     * clear all existing data from storage and re-initialize
+     * purge all existing data from storage and re-initialize
      */
-    static async clearAll() {
+    static async purgestorage() {
         if (StorageManager._storage) {
-            // clear all data from storage
             for (let key in StorageManager._storage) {
                 await StorageManager._internalClearStorageData(key)
                 .then((response) => {
@@ -148,7 +174,7 @@ export default class StorageManager {
      */
     static async clear(key) {
         if (!key) {
-            throwError('clear(key) key: cannot not be null!');
+            throwError('key cannot not be null!');
         }
         if (StorageManager._storage) {
             await StorageManager._internalClearStorageData(key)
@@ -161,6 +187,25 @@ export default class StorageManager {
                 throw error;
             })
         }
+    }
+
+    /**
+     * 
+     * @param {String} key 
+     */
+    static async reset(key) {
+        if (!key) {
+            throwError('key cannot not be null!');
+        }
+        const _type = StorageManager._internalCheckPropType(StorageManager._mapping[key]);
+        if (_type === DataTypes.array) {
+            StorageManager._storage[key] = [];
+        } else if (!nullValues) {
+            const _entity = EntityNormalizer.getType(_type);
+            StorageManager._storage[key] = new _entity();
+        }
+        await StorageManager._internalPersist(key, StorageManager._storage[key]);
+        StorageManager.emit(key);
     }
 
     /**
