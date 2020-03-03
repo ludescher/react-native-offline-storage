@@ -15,8 +15,8 @@ function registerEntity(entity, classname) {
     Normalizer.EntityNormalizer.addEntity(entity, classname);
 }
 
-async function clearAll() {
-    return await StorageManager.clearAll();
+async function purgestorage() {
+    return await StorageManager.purgestorage();
 }
 
 /**
@@ -37,6 +37,18 @@ async function save(key, value = null) {
     StorageManager.save(key, value);
 }
 
+async function remove(key, value = null) {
+    StorageManager.remove(key, value);
+}
+
+/**
+ * 
+ * @param {String} key 
+ */
+async function reset(key) {
+    StorageManager.reset(key);
+}
+
 /**
  * 
  * @param {String} key 
@@ -45,4 +57,4 @@ async function clear(key = null) {
     await StorageManager.clear(key);
 }
 
-export { registerEntity, Entity, UnloadedValue, clear, clearAll, Provider, connect, LinkedDataTransformer, save, load };
+export { registerEntity, Entity, UnloadedValue, clear, purgestorage, reset, Provider, connect, LinkedDataTransformer, save, load, remove };
