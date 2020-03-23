@@ -52,7 +52,7 @@ async function remove(key, value = null) {
  * @param {String} propname 
  * @param {String} sortname 
  */
-function sort(key, propname, sortname) {
+async function sort(key, propname, sortname) {
     StorageManager.sort(key, propname, sortname);
 }
 
