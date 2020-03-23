@@ -194,6 +194,9 @@ class CollectionNormalizer extends DataNormalizer {
                     if (subtype) {
                         internalOptions.forcedType = subtype;
                     }
+
+                    console.log("Array()", {key, val: data});
+                    
                     childs.push(LinkedDataTransformer._internalNormalize(data[key], options, internalOptions));
                 }
                 break;
@@ -234,6 +237,9 @@ class CollectionNormalizer extends DataNormalizer {
                     if (subtype) {
                         internalOptions.forcedType = subtype;
                     }
+
+                    console.log("Array()", {key, val: data['hydra:member']});
+
                     childs.push(LinkedDataTransformer._internalDenormalize(data['hydra:member'][key], options, internalOptions));
                 }
                 break;
@@ -245,6 +251,9 @@ class CollectionNormalizer extends DataNormalizer {
                     if (subtype) {
                         internalOptions.forcedType = subtype;
                     }
+
+                    console.log("Array()", {key, val: data});
+
                     childs.push(LinkedDataTransformer._internalDenormalize(data[key], options, internalOptions));
                 }
                 break;
