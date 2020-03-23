@@ -234,7 +234,7 @@ class CollectionNormalizer extends DataNormalizer {
                     if (subtype) {
                         internalOptions.forcedType = subtype;
                     }
-                    childs[key] = LinkedDataTransformer._internalDenormalize(data['hydra:member'][key], options, internalOptions);
+                    childs[key].push(LinkedDataTransformer._internalDenormalize(data['hydra:member'][key], options, internalOptions));
                 }
                 break;
             }
