@@ -49,16 +49,6 @@ async function remove(key, value = null) {
 /**
  * 
  * @param {String} key 
- * @param {String} propname 
- * @param {String} sortname 
- */
-async function sort(key, propname, sortname) {
-    await StorageManager.sort(key, propname, sortname);
-}
-
-/**
- * 
- * @param {String} key 
  */
 async function reset(key) {
     await StorageManager.reset(key);
@@ -72,4 +62,4 @@ async function clear(key = null) {
     await StorageManager.clear(key);
 }
 
-export { registerEntity, Entity, UnloadedValue, clear, purgestorage, reset, Provider, connect, LinkedDataTransformer, save, load, remove, sort };
+export { registerEntity, Entity, UnloadedValue, clear, purgestorage, reset, Provider, connect, LinkedDataTransformer, save, load, remove };
