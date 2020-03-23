@@ -63,24 +63,33 @@ export default class StorageManager {
             throwError('sortname should be of type String!');
         }
         let _value = StorageManager.getDataByProp(key);
-        if (!_value[propname]) {
-            throwError(`propname "${propname}" does not exists in key "${key}"!`);
+        const _sort = (value) => {
+            if (!value[propname]) {
+                throwError(`propname "${propname}" does not exists in key "${key}"!`);
+            }
+            value[propname].sort((a, b) => {
+                if (!a[sortname]) {
+                    throwError(`sortname "${sortname}" does not exists in propname "${propname}"!`);
+                }
+                var dateA = a[sortname];
+                var dateB = b[sortname];
+                if (dateA < dateB) {
+                    return -1;
+                }
+                if (dateA > dateB) {
+                    return 1;
+                }
+                // names must be equal
+                return 0;
+            });
+        };
+        if (_value instanceof Array) {
+            for (let i = 0; i < _value.length; i++) {
+                _sort(_value[i]);
+            }
+        } else {
+            _sort(_value);
         }
-        _value[propname].sort((a, b) => {
-            if (!a[sortname]) {
-                throwError(`sortname "${sortname}" does not exists in propname "${propname}"!`);
-            }
-            var dateA = a[sortname];
-            var dateB = b[sortname];
-            if (dateA < dateB) {
-                return -1;
-            }
-            if (dateA > dateB) {
-                return 1;
-            }
-            // names must be equal
-            return 0;
-        });
         await StorageManager._internalPersist(key, StorageManager._storage[key]);
         StorageManager.emit(key);
     }

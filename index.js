@@ -34,7 +34,7 @@ function load(key = null) {
  * @param {*} value 
  */
 async function save(key, value = null) {
-    StorageManager.save(key, value);
+    await StorageManager.save(key, value);
 }
 
 /**
@@ -43,7 +43,7 @@ async function save(key, value = null) {
  * @param {*} value 
  */
 async function remove(key, value = null) {
-    StorageManager.remove(key, value);
+    await StorageManager.remove(key, value);
 }
 
 /**
@@ -53,7 +53,7 @@ async function remove(key, value = null) {
  * @param {String} sortname 
  */
 async function sort(key, propname, sortname) {
-    StorageManager.sort(key, propname, sortname);
+    await StorageManager.sort(key, propname, sortname);
 }
 
 /**
@@ -61,7 +61,7 @@ async function sort(key, propname, sortname) {
  * @param {String} key 
  */
 async function reset(key) {
-    StorageManager.reset(key);
+    await StorageManager.reset(key);
 }
 
 /**
