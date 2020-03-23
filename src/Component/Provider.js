@@ -5,23 +5,32 @@ import StorageManager from '../Manager/StorageManager';
 import throwError from '../Service/ErrorService';
 
 class Provider extends React.Component {
-    state = {
-        initialized: false
-    };
+    
+    /**
+     * @type {Object}
+     */
+    state = {};
     
     constructor(props) {
         super(props);
-        this.initialize(props);
+
+        this.state = {
+            initialized: false
+        };
     }
 
     render() {
         return (this.state.initialized) ? this.props.children : this.props.loadingIndicator;
     }
 
-    initialize = async (props) => {        
-        if (typeof props.mapping === 'object') {
-            await StorageManager.initialize(props.mapping, props.nullValues);
-            props.initializationDone(StorageManager._storage);
+    componentDidMount() {
+        this.initialize();
+    }
+
+    initialize = async () => {
+        if (typeof this.props.mapping === 'object') {
+            await StorageManager.initialize(this.props.mapping, this.props.nullValues);
+            this.props.initializationDone(StorageManager._storage);
             this.setState({
                 initialized: true,
             });

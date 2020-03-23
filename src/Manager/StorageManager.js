@@ -328,6 +328,9 @@ export default class StorageManager {
     static async _internalRehydrate(key) {
         return await AsyncStorage.getItem('@' + key)
         .then((value) => {
+            
+            console.log("_internalRehydrate()", JSON.parse(value));
+
             return LinkedDataTransformer.denormalize(JSON.parse(value));
         })
         .catch(() => {
