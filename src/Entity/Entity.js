@@ -4,6 +4,7 @@ export default class Entity {
     static Iri = null; //Internationalized Resource Identifier (replaces class name)
     static TypeMap = {};
     static UniqueProperty = "id";
+    static SortBy = "id";
 
     entityId = null;
 
