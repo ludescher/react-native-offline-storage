@@ -52,7 +52,7 @@ export default class StorageManager {
      * @param {String} propname 
      * @param {String} sortname 
      */
-    static sort(key, propname, sortname) {
+    static async sort(key, propname, sortname) {
         if (typeof key !== 'string') {
             throwError('key should be of type String!');
         }
