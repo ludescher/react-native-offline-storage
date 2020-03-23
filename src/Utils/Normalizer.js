@@ -194,7 +194,7 @@ class CollectionNormalizer extends DataNormalizer {
                     if (subtype) {
                         internalOptions.forcedType = subtype;
                     }
-                    childs[key] = LinkedDataTransformer._internalNormalize(data[key], options, internalOptions);
+                    childs.push(LinkedDataTransformer._internalNormalize(data[key], options, internalOptions));
                 }
                 break;
             }
@@ -245,7 +245,7 @@ class CollectionNormalizer extends DataNormalizer {
                     if (subtype) {
                         internalOptions.forcedType = subtype;
                     }
-                    childs[key] = LinkedDataTransformer._internalDenormalize(data[key], options, internalOptions);
+                    childs.push(LinkedDataTransformer._internalDenormalize(data[key], options, internalOptions));
                 }
                 break;
             }
