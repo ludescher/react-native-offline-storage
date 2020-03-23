@@ -370,7 +370,7 @@ class LinkedDataTransformer {
         for (const normalizer of this._DataNormalizers) {
             if (normalizer.supportsDenormalization(extdata, typename)) {
                 newoptions.entityDepth++;
-                return this.sortBy(normalizer.denormalize(extdata, typename, options, newoptions));
+                return normalizer.denormalize(extdata, typename, options, newoptions);
             }
         }
 
@@ -426,17 +426,6 @@ class LinkedDataTransformer {
 
     static cloneOptions(options) { // cause js does not support pass by value since it doesnt support structs. classic horseshit language
         return JSON.parse(JSON.stringify(options));
-    }
-
-    /**
-     * 
-     * @param {*} data 
-     */
-    static sortBy(data) {
-        if (data instanceof Array) {
-            console.log("sortBy()", data);
-        }
-        return data;
     }
 }
 
