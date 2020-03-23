@@ -194,10 +194,7 @@ class CollectionNormalizer extends DataNormalizer {
                     if (subtype) {
                         internalOptions.forcedType = subtype;
                     }
-
-                    console.log("Array()", {key, val: data});
-                    
-                    childs.push(LinkedDataTransformer._internalNormalize(data[key], options, internalOptions));
+                    childs[key] = LinkedDataTransformer._internalNormalize(data[key], options, internalOptions);
                 }
                 break;
             }
@@ -237,10 +234,7 @@ class CollectionNormalizer extends DataNormalizer {
                     if (subtype) {
                         internalOptions.forcedType = subtype;
                     }
-
-                    console.log("Array()", {key, val: data['hydra:member']});
-
-                    childs.push(LinkedDataTransformer._internalDenormalize(data['hydra:member'][key], options, internalOptions));
+                    childs[key] = LinkedDataTransformer._internalDenormalize(data['hydra:member'][key], options, internalOptions);
                 }
                 break;
             }
@@ -251,10 +245,7 @@ class CollectionNormalizer extends DataNormalizer {
                     if (subtype) {
                         internalOptions.forcedType = subtype;
                     }
-
-                    console.log("Array()", {key, val: data});
-
-                    childs.push(LinkedDataTransformer._internalDenormalize(data[key], options, internalOptions));
+                    childs[key] = LinkedDataTransformer._internalDenormalize(data[key], options, internalOptions);
                 }
                 break;
             }
@@ -379,7 +370,7 @@ class LinkedDataTransformer {
         for (const normalizer of this._DataNormalizers) {
             if (normalizer.supportsDenormalization(extdata, typename)) {
                 newoptions.entityDepth++;
-                return normalizer.denormalize(extdata, typename, options, newoptions);
+                return this.sortBy(normalizer.denormalize(extdata, typename, options, newoptions));
             }
         }
 
@@ -435,6 +426,17 @@ class LinkedDataTransformer {
 
     static cloneOptions(options) { // cause js does not support pass by value since it doesnt support structs. classic horseshit language
         return JSON.parse(JSON.stringify(options));
+    }
+
+    /**
+     * 
+     * @param {*} data 
+     */
+    static sortBy(data) {
+        if (data instanceof Array) {
+            console.log("sortBy()", data);
+        }
+        return data;
     }
 }
 
