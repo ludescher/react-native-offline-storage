@@ -49,6 +49,45 @@ export default class StorageManager {
     /**
      * 
      * @param {String} key 
+     * @param {String} propname 
+     * @param {String} sortname 
+     */
+    static sort(key, propname, sortname) {
+        if (typeof key !== 'string') {
+            throwError('key should be of type String!');
+        }
+        if (typeof propname !== 'string') {
+            throwError('propname should be of type String!');
+        }
+        if (typeof sortname !== 'string') {
+            throwError('sortname should be of type String!');
+        }
+        let _value = StorageManager.getDataByProp(key);
+        if (!_value[propname]) {
+            throwError(`propname "${propname}" does not exists in key "${key}"!`);
+        }
+        _value[propname].sort((a, b) => {
+            if (!a[sortname]) {
+                throwError(`sortname "${sortname}" does not exists in propname "${propname}"!`);
+            }
+            var dateA = a[sortname];
+            var dateB = b[sortname];
+            if (dateA < dateB) {
+                return -1;
+            }
+            if (dateA > dateB) {
+                return 1;
+            }
+            // names must be equal
+            return 0;
+        });
+        await StorageManager._internalPersist(key, StorageManager._storage[key]);
+        StorageManager.emit(key);
+    }
+
+    /**
+     * 
+     * @param {String} key 
      * @returns {*}
      */
     static load(key) {
