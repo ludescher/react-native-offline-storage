@@ -19,4 +19,23 @@ export default class Entity {
             }
         }
     }
+
+    /**
+     * 
+     * @param {String} propname 
+     */
+    isUnloaded(propname = null) {
+        if (propname) {
+            if (this[propname] instanceof UnloadedValue) {
+                return true;
+            }
+        } else {
+            for (const prop in this.constructor.TypeMap) {
+                if (this[prop] instanceof UnloadedValue) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }
