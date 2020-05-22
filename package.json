@@ -1,25 +1,22 @@
 {
     "name": "react-native-offline-storage",
     "version": "1.0.0",
-    "description": "A wrapper for react-native-async-storage.",
+    "description": "this is a very very simple storage solution",
+    "private": true,
     "main": "index.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
+    "scripts": {},
     "repository": {
         "type": "git",
         "url": "git+https://github.com/ludescher/react-native-offline-storage.git"
     },
     "keywords": [
         "react",
-        "storage",
-        "offline"
+        "storage"
     ],
     "tags": [
         "react",
         "react-native",
-        "storage",
-        "offline"
+        "storage"
     ],
     "author": "Johannes Ludescher",
     "license": "ISC",
@@ -28,16 +25,17 @@
     },
     "homepage": "https://github.com/ludescher/react-native-offline-storage#readme",
     "peerDependencies": {
-        "react": "^16.9.0",
-        "react-native": "^0.61.5"
+        "react": "16.11.0",
+        "react-native": "0.62.2"
     },
     "devDependencies": {
-        "mem": ">=4.0.0",
-        "react": "^16.9.0",
-        "react-native": "^0.61.5"
+        "@types/hoist-non-react-statics": "^3.3.1",
+        "@types/jest": "^25.2.3",
+        "@types/react": "^16.9.35",
+        "@types/react-native": "^0.62.10",
+        "@types/react-test-renderer": "^16.9.2"
     },
     "dependencies": {
-        "@react-native-community/async-storage": "^1.7.1",
         "hoist-non-react-statics": "^3.3.2",
         "prop-types": "^15.7.2"
     }
