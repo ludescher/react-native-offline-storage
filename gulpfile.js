@@ -4,7 +4,6 @@ var ts = require('gulp-typescript');
 var tsProject = ts.createProject('tsconfig.json');
 
 gulp.task('default', function () {
-    console.log(_config);
     var tsResult = gulp
         .src('typescript/**/*.ts')
         .pipe(ts(Object.assign(
