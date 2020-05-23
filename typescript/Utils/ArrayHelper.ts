@@ -4,6 +4,7 @@ export function InArray<T, B>(arr: Array<T>, propname: string, value: B): number
     }
     for (let i = 0; i < arr.length; i++) {
         if (propname in arr[i]) {
+            // @ts-ignore
             if (arr[i][propname] === value) {
                 return i;
             }
