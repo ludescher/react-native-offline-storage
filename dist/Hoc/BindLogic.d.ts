@@ -1,2 +1,4 @@
-declare function BindLogic(name: string): void;
+interface FuckReactShit {
+}
+declare function BindLogic(wrappedcomponent: FuckReactShit): void;
 export default BindLogic;

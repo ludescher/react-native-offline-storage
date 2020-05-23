@@ -6,7 +6,7 @@ class RequestManager {
     static limits: Array<RequestLimit> = [];
 
     static async Add<T>(request: Request): Promise<T> {
-        const _limit: RequestLimit = this.FindLimitByRequest(request);
+        const _limit: undefined | RequestLimit = this.FindLimitByRequest(request);
         if (!_limit) {
             throw new RequestLimitError(request.path);
         }
@@ -37,14 +37,14 @@ class RequestManager {
         return -1;
     }
 
-    private static FindLimitByRequest(request: Request): RequestLimit {
+    private static FindLimitByRequest(request: Request): undefined | RequestLimit {
         for (let i = 0; i < this.limits.length; i++) {
-            const _limit = this.limits[i];
+            const _limit: RequestLimit = this.limits[i];
             if (_limit.path === request.path && _limit.method === request.method) {
                 return _limit;
             }
         }
-        return null;
+        return undefined;
     }
 }
 

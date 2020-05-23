@@ -1,9 +1,8 @@
-// import React from 'react';
-// import hoistStatics from 'hoist-non-react-statics';
+interface FuckReactShit {};
 
-function BindLogic(name: string): void {
+function BindLogic(wrappedcomponent: FuckReactShit): void {
 
-    console.log(`MVC: ${name}`);
+    console.log("BindLogic()");
 
 }
 

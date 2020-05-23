@@ -82,7 +82,7 @@ var RequestManager = /** @class */ (function () {
                 return _limit;
             }
         }
-        return null;
+        return undefined;
     };
     RequestManager.limits = [];
     return RequestManager;

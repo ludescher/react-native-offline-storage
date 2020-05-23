@@ -1,14 +1,24 @@
 {
-    "files": [
-        "typescript/main.ts"
-    ],
     "compilerOptions": {
+        "rootDir": "typescript",
+        "outDir": "dist",
         "noImplicitAny": true,
         "target": "es5",
         "declaration": true,
         "declarationMap": true,
-        "removeComments": true
+        "removeComments": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "lib": [
+            "ES6"
+        ],
+        "isolatedModules": true,
+        "noEmit": true,
+        "strict": true
     },
+    "files": [
+        "typescript/main.ts"
+    ],
     "include": [
         "typescript/**/*"
     ],
