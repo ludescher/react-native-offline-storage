@@ -4,17 +4,17 @@
     ],
     "compilerOptions": {
         "noImplicitAny": true,
-        "target": "ES6",
+        "target": "es5",
         "declaration": true,
         "declarationMap": true,
-        "removeComments": true,
+        "removeComments": true
     },
     "include": [
-        "typescript/**/*",
+        "typescript/**/*"
     ],
     "exclude": [
         "node_modules",
         "Example",
-        "dist",
+        "dist"
     ]
 }

@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "description": "this is a very very simple storage solution",
     "private": true,
-    "main": "dist/index.js",
+    "main": "dist/main.js",
     "scripts": {},
     "repository": {
         "type": "git",
@@ -31,9 +31,10 @@
     "devDependencies": {
         "gulp": "4.0.0",
         "gulp-typescript": "^6.0.0-alpha.1",
+        "merge2": "^1.3.0",
         "react": "^16.13.1",
         "react-native": "^0.62.2",
-        "typescript": "^3.8.3"
+        "typescript": "^3.9.3"
     },
     "dependencies": {
         "hoist-non-react-statics": "^3.3.2",

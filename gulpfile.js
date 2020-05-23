@@ -1,9 +1,16 @@
 var gulp = require('gulp');
+var merge = require('merge2');
 var ts = require('gulp-typescript');
-var tsProject = ts.createProject('tsconfig.json');
 
 gulp.task('default', function () {
-    return tsProject.src()
-        .pipe(tsProject())
-        .js.pipe(gulp.dest('dist'));
+    var tsResult = gulp.src('typescript/**/*.ts')
+        .pipe(ts({
+            declarationFiles: true,
+            noResolve: true,
+        }));
+
+    return merge([
+        tsResult.dts.pipe(gulp.dest('dist')),
+        tsResult.js.pipe(gulp.dest('dist'))
+    ]);
 });
