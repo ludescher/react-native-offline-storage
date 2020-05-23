@@ -5,14 +5,13 @@
     "compilerOptions": {
         "noImplicitAny": true,
         "target": "ES6",
-        "allowSyntheticDefaultImports": true,
-        "alwaysStrict": true,
         "declaration": true,
         "declarationMap": true,
-        "isolatedModules": true,
-        "module": "ES6",
-        "moduleResolution": "classic",
-        "removeComments": true,
-        "sourceMap": true
-    }
+    },
+    "include": [
+        "typescript/**/*",
+    ],
+    "exclude": [
+        "node_modules",
+    ]
 }

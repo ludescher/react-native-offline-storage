@@ -1,5 +1,3 @@
-function hello(compiler: string) {
-    console.log(`Hello from ${compiler}`);
-}
+import BindLogic from './Hoc/BindLogic';
 
-hello('TypeScript');
+export { BindLogic };

@@ -1,9 +1,9 @@
-import React from 'react';
-import hoistStatics from 'hoist-non-react-statics';
+// import React from 'react';
+// import hoistStatics from 'hoist-non-react-statics';
 
-function BindLogic(test: any) {
+function BindLogic() {
 
-    console.log("MVC()", test);
+    console.log(`MVC:`);
 
 }
 
