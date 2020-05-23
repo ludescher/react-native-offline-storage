@@ -1,15 +1,15 @@
-import { Component } from 'react';
+import React from 'react';
 import ComponentError from '../Error/ComponentError';
 
 function BindLogic(WrappedComponent, Controller) {
 
     console.log("BindLogic()", { WrappedComponent, Controller });
 
-    if (!(WrappedComponent instanceof Component)) {
+    if (!(WrappedComponent instanceof React.Component)) {
         throw new ComponentError('WrappedComponent has to be of type React.Component');
     }
 
-    class LogicComponent extends Component {
+    class LogicComponent extends React.Component {
 
         /**
          * @type {Object}
