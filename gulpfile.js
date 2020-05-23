@@ -4,7 +4,16 @@ var ts = require('gulp-typescript');
 var tsProject = ts.createProject('tsconfig.json');
 
 gulp.task('default', function () {
-    var tsResult = tsProject.src().pipe(tsProject());
+    console.log(_config);
+    var tsResult = gulp
+        .src('typescript/**/*.ts')
+        .pipe(ts(Object.assign(
+            tsProject.config.compilerOptions,
+            {
+                declarationFiles: true,
+                noResolve: true,
+            }
+        )));
     return merge([
         tsResult.dts.pipe(gulp.dest('dist')),
         tsResult.js.pipe(gulp.dest('dist'))

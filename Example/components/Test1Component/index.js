@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text } from 'react-native';
-import { BindLogic } from '../../../dist/main';
+import { BindLogic } from 'react-native-offline-storage';
 
 class Test1Component extends React.Component {
     render() {
