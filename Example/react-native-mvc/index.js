@@ -1,11 +1,12 @@
 import React from 'react';
+import hoistStatics from 'hoist-non-react-statics';
 
 export function mvc(Controller) {
-    if (!(Logic instanceof AbstractComponentLogic)) {
-        throw new Error('Logic has to be of type AbstractComponentLogic');
+    if (!Controller) {
+        throw new Error('Controller has to be of type AbstractComponentLogic');
     }
     return (WrappedComponent) => {
-        if (!(WrappedComponent instanceof React.Component)) {
+        if (!WrappedComponent) {
             throw new Error('WrappedComponent has to be of type React.Component');
         }
         class MVCComponent extends React.Component {
@@ -40,4 +41,4 @@ export function mvc(Controller) {
     }
 }
 
-export default BindLogic;
+export default mvc;
