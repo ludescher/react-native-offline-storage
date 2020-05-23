@@ -3,7 +3,7 @@ import hoistStatics from 'hoist-non-react-statics';
 
 export function mvc(Controller) {
     if (!Controller) {
-        throw new Error('Controller has to be of type AbstractComponentLogic');
+        throw new Error('Controller cannot not be null');
     }
     return (WrappedComponent) => {
         if (!WrappedComponent) {

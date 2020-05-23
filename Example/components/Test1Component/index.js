@@ -12,6 +12,4 @@ class Test1Component extends React.Component {
     }
 }
 
-// export default Test1Component;
-
 export default mvc(require('./Controller').default)(Test1Component);
