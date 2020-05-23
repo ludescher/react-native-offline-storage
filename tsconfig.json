@@ -7,11 +7,14 @@
         "target": "ES6",
         "declaration": true,
         "declarationMap": true,
+        "removeComments": true,
     },
     "include": [
         "typescript/**/*",
     ],
     "exclude": [
         "node_modules",
+        "Example",
+        "dist",
     ]
 }
