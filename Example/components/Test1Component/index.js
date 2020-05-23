@@ -12,4 +12,4 @@ class Test1Component extends React.Component {
     }
 }
 
-export default Test1Component;
+export default BindLogic(Test1Component, require('./Controller').default);

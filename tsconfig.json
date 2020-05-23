@@ -3,7 +3,7 @@
         "rootDir": "typescript",
         "outDir": "dist",
         "noImplicitAny": true,
-        "target": "es5",
+        "target": "ES6",
         "declaration": true,
         "declarationMap": true,
         "removeComments": true,
