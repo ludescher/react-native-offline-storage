@@ -34,8 +34,5 @@
         "react": "^16.13.1",
         "typescript": "^3.9.3"
     },
-    "dependencies": {
-        "hoist-non-react-statics": "^3.3.2",
-        "prop-types": "^15.7.2"
-    }
+    "dependencies": {}
 }

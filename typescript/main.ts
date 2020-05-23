@@ -1,3 +1,5 @@
-import BindLogic from './Hoc/BindLogic';
+function test(): void {
 
-export { BindLogic };
+}
+
+export { test };

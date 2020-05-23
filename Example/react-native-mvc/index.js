@@ -1,21 +1,14 @@
 import React from 'react';
-import ComponentError from '../Error/ComponentError';
-import AbstractComponentLogic from '../React/AbstractComponentLogic';
 
-function BindLogic(Controller) {
-
-    console.log("BindLogic()", Controller);
-
+export function mvc(Controller) {
     if (!(Logic instanceof AbstractComponentLogic)) {
-        throw new ComponentError('Logic has to be of type AbstractComponentLogic');
+        throw new Error('Logic has to be of type AbstractComponentLogic');
     }
-
     return (WrappedComponent) => {
         if (!(WrappedComponent instanceof React.Component)) {
-            throw new ComponentError('WrappedComponent has to be of type React.Component');
+            throw new Error('WrappedComponent has to be of type React.Component');
         }
-
-        class LogicComponent extends React.Component {
+        class MVCComponent extends React.Component {
 
             /**
              * @type {Object}
@@ -33,10 +26,10 @@ function BindLogic(Controller) {
         }
 
         const _forwarded = React.forwardRef((props, ref) => {
-            return <LogicComponent {...props} forwardedRef={ref} />
+            return <MVCComponent {...props} forwardedRef={ref} />
         });
 
-        _forwarded.displayName = `LogicComponent(${getDisplayName(WrappedComponent)})`;
+        _forwarded.displayName = `MVCComponent(${getDisplayName(WrappedComponent)})`;
         _forwarded.WrappedComponent = WrappedComponent;
 
         return hoistStatics(_forwarded, WrappedComponent);

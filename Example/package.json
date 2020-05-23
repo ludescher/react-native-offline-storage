@@ -11,6 +11,7 @@
     "fun": "yarn start -- --reset-cache"
   },
   "dependencies": {
+    "hoist-non-react-statics": "^3.3.2",
     "react": "16.11.0",
     "react-native": "0.62.2",
     "react-native-offline-storage": "github:ludescher/react-native-offline-storage#vnext"
