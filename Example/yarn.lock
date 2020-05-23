@@ -5509,7 +5509,7 @@ react-is@^16.12.0, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4, react-i
 
 "react-native-offline-storage@github:ludescher/react-native-offline-storage#vnext":
   version "1.0.0"
-  resolved "https://codeload.github.com/ludescher/react-native-offline-storage/tar.gz/3480ad64617da2f1c3fb262cab51563bdb55f352"
+  resolved "https://codeload.github.com/ludescher/react-native-offline-storage/tar.gz/3932cabd30b608303653d632979433bfcf79aa8e"
   dependencies:
     hoist-non-react-statics "^3.3.2"
     prop-types "^15.7.2"
