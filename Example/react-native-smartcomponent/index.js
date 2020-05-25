@@ -1,7 +1,7 @@
 import React from 'react';
 import hoistStatics from 'hoist-non-react-statics';
 
-export function mvc(Controller) {
+export function smartcomponent(Controller) {
     if (!Controller) {
         throw new Error('Controller cannot not be null');
     }
@@ -9,15 +9,35 @@ export function mvc(Controller) {
         if (!WrappedComponent) {
             throw new Error('WrappedComponent has to be of type React.Component');
         }
-        class MVCComponent extends React.Component {
+
+        // WrappedComponent.bind(new Controller());
+
+        const test = Object.getOwnPropertyNames(Controller());
+
+        console.log("test()", test);
+
+        // WrappedComponent.prototype.testCall = () => {
+        //     console.log("testCall()");
+        // };
+
+        console.log("WrappedComponent()", WrappedComponent);
+
+        return WrappedComponent;
+        class SmartComponent extends React.Component {
 
             /**
              * @type {Object}
              */
             state = {};
 
+            /**
+             * @type {Class}
+             */
+            controller;
+
             constructor(props) {
                 super(props);
+                this.controller = new Controller(props);
             }
 
             render() {
@@ -27,10 +47,10 @@ export function mvc(Controller) {
         }
 
         const _forwarded = React.forwardRef((props, ref) => {
-            return <MVCComponent {...props} forwardedRef={ref} />
+            return <SmartComponent {...props} forwardedRef={ref} />
         });
 
-        _forwarded.displayName = `MVCComponent(${getDisplayName(WrappedComponent)})`;
+        _forwarded.displayName = `SmartComponent(${getDisplayName(WrappedComponent)})`;
         _forwarded.WrappedComponent = WrappedComponent;
 
         return hoistStatics(_forwarded, WrappedComponent);
@@ -41,4 +61,4 @@ export function mvc(Controller) {
     }
 }
 
-export default mvc;
+export default smartcomponent;

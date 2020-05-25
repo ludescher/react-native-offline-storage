@@ -1,14 +1,8 @@
-class Controller {
+import AbstractController from "../../react-native-smartcomponent/AbstractController";
 
-    /**
-     * @type {Object}
-     */
-    state = {};
-
-    constructor(props) {
-        this.state({
-            text: 'From Controller',
-        });
+class Controller extends AbstractController {
+    testCall() {
+        console.log("testCall(Controller)");
     }
 }
 

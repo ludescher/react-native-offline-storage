@@ -1,15 +1,24 @@
 import React from 'react';
-import { Text } from 'react-native';
-import { mvc } from '../../react-native-mvc';
+import { Text, TouchableOpacity } from 'react-native';
+import { smartcomponent } from '../../react-native-smartcomponent';
 
 class Test1Component extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+        console.log("Test1Component()", this);
+    }
+
     render() {
         return (
-            <Text>
-                Test
+            <TouchableOpacity onPress={() => this.testCall()}>
+                <Text>
+                    Test
             </Text>
+            </TouchableOpacity>
         );
     }
 }
 
-export default mvc(require('./Controller').default)(Test1Component);
+export default smartcomponent(require('./Controller').default)(Test1Component);
